@@ -104,7 +104,7 @@ const BookList = () => {
       </div>
 
       {loading ? (
-        <div className="spinner">Loading...</div>
+        <div className="spinner"></div>
       ) : books.length === 0 ? (
         <p>No books found.</p>
       ) : (

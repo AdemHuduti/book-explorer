@@ -23,7 +23,8 @@ class BookViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         # Each user sees only their book
-        return Book.objects.filter(owner=self.request.user)
+        # return Book.objects.filter(owner=self.request.user)
+        return Book.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
