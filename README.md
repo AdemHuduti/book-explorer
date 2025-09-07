@@ -127,6 +127,7 @@ npm install
 <li>Synchronizing Frontend/Backend: Ensured API URLs were correctly set in development mode.</li>
 
 <li>Form Handling in React: Handling nested API errors from DRF in React forms.</li>
+<li>Generally dealing with Django, since I don't have much experience with it.</li>
 </ul>
 
 
