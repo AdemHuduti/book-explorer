@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions, filters
-from .models import Book
-from .serializers import BookSerializer
+from .models import Book, BookNote
+from .serializers import BookSerializer, BookNoteSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import BookFilter
 
@@ -22,9 +22,21 @@ class BookViewSet(viewsets.ModelViewSet):
     ordering = ['title']
 
     def get_queryset(self):
-        # Each user sees only their book
-        # return Book.objects.filter(owner=self.request.user)
         return Book.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class BookNoteViewSet(viewsets.ModelViewSet):
+    """
+    Handles CRUD operations for user-specific book notes
+    """
+    serializer_class = BookNoteSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return BookNote.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

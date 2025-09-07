@@ -1,38 +1,62 @@
 import { useParams } from "react-router-dom";
+import useBookNotes from "../../hooks/useBookNotes";
 import { useFetchBooksById } from "../../hooks/useFetchBookById";
-import { useEffect, useState } from "react";
-import api from "../../api";
+import BookNotes from "./BookNotes";
 
-function BookDetail() {
-  const { id } = useParams();
+const BookDetail = () => {
+  const { id } = useParams(); // book ID from URL
   const { book } = useFetchBooksById(id);
+  const {
+    notes,
+    note,
+    editNoteValue,
+    loading,
+    error,
+    editNoteId,
+    saveNote,
+    deleteNote,
+    setNote,
+    startEditing,
+    cancelEditing,
+    setEditNoteValue,
+  } = useBookNotes(id);
 
-  const [bookTitle, setBookTitle] = useState("");
-  const [bookDescription, setBookDescription] = useState("");
-  const [author, setBookAuthor] = useState("");
-  const [publishDate, setPublishDate] = useState("");
-
-  useEffect(() => {
-    if (book && book.title) {
-      setBookTitle(book.title);
-      setBookDescription(book.description);
-      setBookAuthor(book.author);
-      setPublishDate(book.published_date);
-    }
-  }, [book]);
-
-  if (!book || !book.title) return <p>Loading...</p>;
+  if (loading) return <div className="spinner"></div>;
 
   return (
     <div className="container">
       <div className="book-details-info">
-        <h1>Book detail: {bookTitle}</h1>
-        <i>{bookDescription}</i>
-        <p>Published: {publishDate}</p>
-        <p>Author: <b>{author}</b></p>
+        {book && (
+          <>
+            <h2>{book.title}</h2>
+            <p>
+              <strong>Author:</strong> {book.author}
+            </p>
+            <p>{book.description}</p>
+            <p>
+              <strong>Published:</strong> {book.published_date}
+            </p>
+
+            <hr />
+            <h3>Your Notes:</h3>
+            <BookNotes
+              notes={notes}
+              note={note}
+              editNoteValue={editNoteValue}
+              editNoteId={editNoteId}
+              saveNote={saveNote}
+              deleteNote={deleteNote}
+              setNote={setNote}
+              startEditing={startEditing}
+              cancelEditing={cancelEditing}
+              setEditNoteValue={setEditNoteValue}
+            />
+          </>
+        )}
+        {error && <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>}
       </div>
     </div>
   );
-}
+};
 
 export default BookDetail;

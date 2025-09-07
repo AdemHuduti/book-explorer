@@ -28,7 +28,7 @@ function EditBook() {
       title: newTitle,
       author: book.author,
       description: newDescription,
-      published_date: newYear
+      published_date: newYear,
     };
 
     try {

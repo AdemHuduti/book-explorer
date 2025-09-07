@@ -33,6 +33,17 @@ export const useFetchBooks = () => {
     getBooks();
   }, []);
 
+  const testFunc = async () => {
+    try {
+      const response = await api.get("/api/notes/");
+      if(response) {
+        console.log("Here is notes response", response)
+      }
+    } catch (error) {
+      console.log(error)      
+    }
+  }
+
   const filterByAuthorNameOrMovieTitle = async (type, author, movieTitle) => {
     setLoading(true);
     const queryParam =

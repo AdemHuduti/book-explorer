@@ -72,7 +72,9 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 16px;
   transition: transform 0.2s ease;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .book-details:hover {
@@ -119,7 +121,6 @@
   border-radius: 5px;
   font-size: 16px;
   width: 200px;
-  /* Hide native arrow for custom styling */
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -182,6 +183,25 @@
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 16px auto;
+}
+
+.notes-options button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-right: 5px;
+  margin-top: 15px;
+}
+
+.update-save-note {
+  background-color: #4caf50;
+}
+.delete-note {
+  background-color: #ff4d4d;
 }
 
 @keyframes spin {

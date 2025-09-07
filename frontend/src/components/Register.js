@@ -10,6 +10,7 @@ function Register() {
   const [errorMessage, setErrorMessage] = useState("");
   const [passwordNotMatch, setPasswordNotMatch] = useState("");
   const [sameEmail, setSameEmail] = useState("");
+  const [successRegister, setSuccessRegister] = useState("");
   const navigate = useNavigate();
 
   const onFormSubmit = (e) => {
@@ -25,12 +26,22 @@ function Register() {
         password,
         password2,
       });
-      console.log(response, "here");
+
+      if (response) {
+        setErrorMessage("");
+        setPasswordNotMatch("");
+        setSameEmail("");
+
+        setSuccessRegister(
+          "User successfully registered. Please login with same credentials."
+        );
+      }
     } catch (error) {
       console.log("error here", error);
       setErrorMessage(error.response?.data?.password);
       setPasswordNotMatch(error.response?.data.password2);
       setSameEmail(error.response?.data.email);
+      setSuccessRegister("");
     }
   };
 
@@ -50,7 +61,7 @@ function Register() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div style={{width: '300px'}}>
+        <div style={{ width: "300px" }}>
           {sameEmail && <small style={{ color: "red" }}>{sameEmail}</small>}
         </div>
         <div
@@ -88,7 +99,11 @@ function Register() {
             {passwordNotMatch && passwordNotMatch}
           </small>
         </div>
-
+        <div>
+          {successRegister && (
+            <small style={{ color: "green", fontWeight: "bold" }}>{successRegister}</small>
+          )}
+        </div>
         <div>
           <button type="submit">Register</button>
           <button type="button" onClick={() => navigate("/login")}>
